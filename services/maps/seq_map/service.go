@@ -51,11 +51,12 @@ func (service *SequentialMapService) internalNearestTarget(pos int) (length int,
 		}
 	}
 
-	if targetPoint := service.targetPoints[len(service.targetPoints)-1]; pos < targetPoint {
+	targetPoint = service.targetPoints[len(service.targetPoints)-1]
+	if pos < targetPoint {
 		return targetPoint - pos, targetPoint
 	}
 
-	panic("overed from map")
+	return 0, targetPoint
 }
 
 func (service *SequentialMapService) InitialPositionID() (positionID string) {
@@ -77,7 +78,7 @@ func (service *SequentialMapService) internalProgressPercent(pos int) int {
 	if pos >= goal {
 		return 100
 	} else {
-		return int(float32(pos) / float32(goal))
+		return int(100 * float32(pos) / float32(goal))
 	}
 }
 
